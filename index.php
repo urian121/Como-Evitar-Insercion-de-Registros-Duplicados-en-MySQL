@@ -45,9 +45,8 @@
           <div class="row">
             <div class="col-md-12 text-center" style="padding:100px 0px;">
               <h3 class="text-center" style="font-size:40px; color:#333; font-weight:900;">
-              &#128562; COMO EVITAR INSERCIÓN DE REGISTROS DUPLICADOS EN MySQL 2022 💥 ✅
+              &#128562; COMO EVITAR INSERCIÓN DE REGISTROS DUPLICADOS CON MySQL 2022 💥 ✅
               </h3>
-              <img src="assets/img/portada.PNG" alt="Reportes en PDF" class="img-fluid portada">
             </div>
           </div>
         </div>
@@ -55,95 +54,45 @@
       <section>
           <div class="container">
             <div class="row">
-              <div class="col-md-12 text-center">
-                <form action="DescargarReporte_x_fecha_PDF.php" method="post" accept-charset="utf-8">
-                  <div class="row">
-                    <div class="col">
-                      <input type="date" name="fecha_ingreso" class="form-control"  placeholder="Fecha de Inicio" required>
-                    </div>
-                    <div class="col">
-                      <input type="date" name="fechaFin" class="form-control" placeholder="Fecha Final" required>
-                    </div>
-                    <div class="col">
-                      <span class="btn btn-dark mb-2" id="filtro">Filtrar</span>
-                      <button type="submit" class="btn btn-danger mb-2">Descargar Reporte</button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-
-              <div class="col-md-12 text-center mt-5">     
-                <span id="loaderFiltro">  </span>
-              </div>
-              
-              
-            <div class="table-responsive resultadoFiltro">
-              <table class="table table-hover" id="tableEmpleados">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">NOMBRE Y APELLIDO</th>
-                    <th scope="col">EMAIL</th>
-                    <th scope="col">TELEFONO</th>
-                    <th scope="col">SUELDO</th>
-                    <th scope="col">FECHA DE INGRESO</th>
-                  </tr>
-                </thead>
-              <?php
-              include('config.php');
-              $sqlTrabajadores = ('SELECT * FROM trabajadores ORDER BY fecha_ingreso ASC');
-              $query = mysqli_query($con, $sqlTrabajadores);
-              $i =1;
-                while ($dataRow = mysqli_fetch_array($query)) { ?>
-                <tbody>
-                  <tr>
-                    <td><?php echo $i++; ?></td>
-                    <td><?php echo $dataRow['nombre'] . ' '. $dataRow['apellido']; ?></td>
-                    <td><?php echo $dataRow['email'] ; ?></td>
-                    <td><?php echo $dataRow['telefono'] ; ?></td>
-                    <td><?php echo '$ '. $dataRow['sueldo'] ; ?></td>
-                    <td><?php echo $dataRow['fecha_ingreso'] ; ?></td>
-                </tr>
-                </tbody>
-              <?php } ?>
-              </table>
+            <div class="col-md-8 text-center">
+              <?php include('tabla.php') ; ?>
             </div>
 
+            <div class="col-md-4 text-center">
+              <form accept-charset="utf-8" autocomplete="false">
+                <div class="form-group mb-2 mt-2">
+                <label for="Nombre">Nombre</label>
+                  <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre">
+                </div>
+                <div class="form-group">
+                <label for="apellido">Apellido</label>
+                  <input type="text" name="apellido" id="apellido" class="form-control" placeholder="Apellido">
+                </div>
+                <div class="form-group">
+                  <label for="Email">Email</label>
+                  <input type="email" name="email" class="form-control" placeholder="Email">
+                </div>
+                <div class="form-group">
+                  <label for="Telefono">Telefono</label>
+                  <input type="number" name="telefono" id="telefono" class="form-control" placeholder="Telefono">
+                </div>
+                <div class="form-group">
+                  <label for="Sueldo">Sueldo</label>
+                  <input type="number" name="sueldo" id="sueldo" class="form-control" placeholder="Sueldo">
+                </div>
+                <button type="submit" id="EnviarForm" class="btn btn-primary mt-3 btn-block mb-2">Enviar Formulario</button>
+              </form>
             </div>
           </div>
+        </div>
       </section>
 
 
-
-    <footer class="footer grey darken-4">
-      <div class="container center" style="padding-top: 5px;">
-        <div class="row justify-content-md-center">
-          <div class="col col-lg-5">
-          &copy; Visita mis Redes - 2022 WebDeveloper
-          </div>
-          <div class="col-md-auto">
-            <a href="https://www.youtube.com/c/WebDeveloperUrianViera/videos" target="_blank" title="Visitar Youtube">
-              <i class="bi bi-youtube"></i>
-            </a>
-            <a href="https://github.com/urian121" target="_blank" title="Visitar Github">
-              <i class="bi bi-github"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/urian-viera-a930859b/" target="_blank" title="Visitar Linkedin">
-              <i class="bi bi-linkedin"></i>
-            </a>
-            <a href="https://blogangular-c7858.web.app/" target="_blank" title="Visitar Portafolio">
-              <i class="bi bi-briefcase"></i>
-            </a>
-
-          </div>
-        </div>
-      </div>
-    </footer>
-
-
+<?php include('footer.html'); ?>
 
   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
   <script src="assets/js/material.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
   $(function() {
       setTimeout(function(){
@@ -151,26 +100,26 @@
       }, 1000);
 
 
-//FILTRANDO REGISTROS
-$("#filtro").on("click", function(e){ 
-  e.preventDefault();
-  
-  loaderF(true);
-
-  var f_ingreso = $('input[name=fecha_ingreso]').val();
-  var f_fin = $('input[name=fechaFin]').val();
-  console.log(f_ingreso + '' + f_fin);
-
-  if(f_ingreso !="" && f_fin !=""){
-    $.post("filtro.php", {f_ingreso, f_fin}, function (data) {
-      $("#tableEmpleados").hide();
-      $(".resultadoFiltro").html(data);
-      loaderF(false);
-    });  
-  }else{
-    $("#loaderFiltro").html('<p style="color:red;  font-weight:bold;">Debe seleccionar ambas fechas</p>');
-  }
-} );
+      window.addEventListener("load", () => {
+                const form = document.querySelector("form");
+                form.addEventListener("submit", (e) => {
+                    e.preventDefault();
+                    let data = new FormData(form);
+                    console.log(data);
+                    axios({
+                        method: "POST",
+                        url: "/recibeForm.php",
+                        data: data,
+                        headers: { "Content-Type": "multipart/form-data" },
+                    })
+                        .then((res) => {
+                            console.log(res);
+                        })
+                        .catch((err) => {
+                            throw err;
+                        });
+                });
+            });
 
 
 function loaderF(statusLoader){
