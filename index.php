@@ -57,8 +57,8 @@
     <div class="container">
       <div class="row">
       <div class="col-md-12 text-center">
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-          <strong>Felicitaciones!</strong> El Registro fue un exito .! 
+        <div style="display:none;" id="msj" class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Felicitaciones!</strong> El Registro fue un exito .! 👍
         </div>
       </div>
 
@@ -102,83 +102,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
   <script src="assets/js/material.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script>
-    window.addEventListener("load", () => {
-      setTimeout(function() {
-        $('body').addClass('loaded');
-      }, 500);
-
-      const miForm = document.querySelector("#miForm");
-      miForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-
-        let nombre      = document.querySelector('#nombre').value;
-        let apellido    = document.querySelector('#apellido').value;
-        let email       = document.querySelector('input[name=email]').value;
-        let telefono    = document.querySelector('#telefono').value;
-        let sueldo      = document.querySelector('#sueldo').value;
-        console.log(nombre + ' - ' + apellido + ' - ' + email + ' - ' + telefono + ' - ' + sueldo);
-
-    /**Validando los campos para evitar campos vacios */
-    if((nombre ==='')){
-      alert('campo vacio');
-    }
-
-
-    btnEnviar.disabled = true; /*Desabilitando el boton Enviar*/
-    btnEnviar.innerHTML = "Enviando mi Form..."; /*Cambiando el valor del boton*/
-    loader(true); /*Mi funcion Pre-loader*/
-
-        axios({
-            method: "POST",
-            url: "recibeForm.php",
-            data: {
-              nombre: nombre,
-              apellido: apellido,
-              email: email,
-              telefono: telefono,
-              sueldo: sueldo
-            },
-            headers: {
-              "Content-Type": "multipart/form-data"
-            },
-          })
-          .then((res) => {
-            console.log(res.data);  
-
-            loader(false);
-            btnEnviar.disabled = false; /*Desabilitando el boton */
-            btnEnviar.innerHTML = "Enviar Formulario"; /*Cambiando el valor del boton*/
-          })
-          .catch((err) => {
-            throw err;
-          })
-          .finally(function () {
-            console.log('Operacion terminada');
-            miForm.reset(); //Limpiando formulario
-          });
-      });
-    });
-
-
-
-/* Mi funcion Pre-loader */
-var cargando = false;
-function loader(cargando) {
-    let body = document.body;
-    if (cargando) {
-        let body = document.body;
-        body.style.opacity = "0.1";
-        body.style.bottom = "0";
-        body.style.left = "0";
-        body.style.right = "0";
-        body.style.top = "0";
-        body.style.zIndex = "99999999999999999999";
-    } else {
-        body.style.opacity = "10";
-    }
-}
-  </script>
+  <script src="assets/js/form.js"></script>
 
 </body>
 </html>

@@ -25,13 +25,13 @@ sleep(3);
             VALUES ('$nombre','$apellido','$email','$telefono', '$sueldo', CURDATE())
             ON DUPLICATE KEY UPDATE nombre = $nombre , apellido = $apellido, telefono = $telefono, sueldo = $sueldo, fecha_ingreso=CURDATE()";
         $resultadoCliente = mysqli_query($con, $InsertCliente);    
-        print_r($InsertCliente);   
+        //print_r($InsertCliente);   
         echo '1';
     } else {
         /**Caso 2: No existe, creo el registro */
-        $InsertCliente = "INSERT INTO trabajadores(nombre, apellido, email, telefono, sueldo, fecha_ingreso)
-        VALUES ('$nombre','$apellido','$email','$telefono', '$sueldo', CURDATE())";
-        echo '2';
+        $InsertCliente = "INSERT INTO trabajadores(nombre, apellido, email, telefono, sueldo, fecha_ingreso) VALUES ('$nombre','$apellido','$email','$telefono', '$sueldo', CURDATE())";
+        //echo '2';
+        print_r($InsertCliente);
     }
 
 }
