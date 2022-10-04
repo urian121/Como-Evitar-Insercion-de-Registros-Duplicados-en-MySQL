@@ -58,14 +58,11 @@
       <div class="row">
       <div class="col-md-12 text-center">
         <div style="display:none;" id="msj" class="alert alert-success alert-dismissible fade show" role="alert">
-          <strong>Felicitaciones!</strong> El Registro fue un exito .! 👍
+          
         </div>
       </div>
 
-
-        <div class="col-md-8 text-center">
-          <?php include('tabla.php'); ?>
-        </div>
+      <?php include('tabla.php'); ?>
 
         <div class="col-md-4 text-center">
           <form name="miForm" id="miForm" >

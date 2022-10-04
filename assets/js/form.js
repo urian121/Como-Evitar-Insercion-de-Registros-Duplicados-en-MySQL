@@ -39,6 +39,7 @@ window.addEventListener("load", () => {
           },
         })
         .then((res) => {
+          console.log(res);
           /**Utilizo un Ternario, Si existe el registro, lo actualizo */
           (res.data ==1) ? mensaje(res.data) : mensaje(res.data)
 
@@ -83,10 +84,11 @@ function mensaje(type){
     let divMensaje = document.querySelector('#msj'); /**Accedo a la capa del mensaje */
     divMensaje.style.display='block'; /**Pongo la capo msj visible */
 
-    if(divMensaje ==1){ /** Actualizo registro por que ya existe en BD*/
-        divMensaje.innerHTML =`<strong>Felicitaciones!</strong> Empleado fue actualizado con éxito .! 👍`;
+    if(type ==1){ /** Actualizo registro por que ya existe en BD*/
+        //divMensaje.innerHTML =`<strong>Uhs!</strong> El empleado ya existe ⚠️ 😲 ..!`;
+        divMensaje.innerHTML =`<strong>Felicitaciones!</strong> El empleado fue actualizado con éxito .! 👍`;
     }else{ /** Se inserta el registro por que no existe en BD*/
-        divMensaje.innerHTML =`<strong>Felicitaciones!</strong> El Cliente fue registrado con éxito .! 👍`;
+        divMensaje.innerHTML =`<strong>Felicitaciones!</strong> El cliente fue registrado con éxito .! 👍`;
     }
 
     /**Ocultar mensaje luego de 3 segundos */

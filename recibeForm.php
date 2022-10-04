@@ -14,24 +14,29 @@ sleep(3);
 
     /**Importante: Antes de hacer cualquier accion verifico si existe algun registro con
      * informacion  igaul a la que esta llegando desde el formulario.
-     */
+    */
     $selectQuery   = ("SELECT email FROM trabajadores WHERE email='{$email}' ");
     $query         = mysqli_query($con, $selectQuery);
     $totalCliente  = mysqli_num_rows($query);
 
     /**Caso 1: Existe el registro */
     if ($totalCliente >= 1) {
-        $InsertCliente = "INSERT INTO trabajadores(nombre, apellido, email, telefono, sueldo, fecha_ingreso)
-            VALUES ('$nombre','$apellido','$email','$telefono', '$sueldo', CURDATE())
-            ON DUPLICATE KEY UPDATE nombre = $nombre , apellido = $apellido, telefono = $telefono, sueldo = $sueldo, fecha_ingreso=CURDATE()";
-        $resultadoCliente = mysqli_query($con, $InsertCliente);    
-        //print_r($InsertCliente);   
+        $updateCliente = ("UPDATE  trabajadores
+            SET nombre   ='$nombre',
+                apellido ='$apellido',
+                email    ='$email',
+                telefono ='$telefono',
+                sueldo   ='$sueldo',
+                fecha_ingreso=CURDATE()
+                ");
+        $resultadoCliente = mysqli_query($con, $updateCliente);    
         echo '1';
     } else {
         /**Caso 2: No existe, creo el registro */
-        $InsertCliente = "INSERT INTO trabajadores(nombre, apellido, email, telefono, sueldo, fecha_ingreso) VALUES ('$nombre','$apellido','$email','$telefono', '$sueldo', CURDATE())";
-        //echo '2';
-        print_r($InsertCliente);
+        $InsertCliente = "INSERT INTO trabajadores(nombre, apellido, email, telefono, sueldo, fecha_ingreso) 
+            VALUES ('$nombre','$apellido','$email','$telefono', '$sueldo', CURDATE())";
+        $resultadoCliente = mysqli_query($con, $InsertCliente); 
+        echo '2';
     }
 
 }
