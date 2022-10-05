@@ -5,6 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <!-- las tres siguientes líneas son  para obtener los elementos de HTML5 que funcionen en versiones de Internet Explorer antiguas -->
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+
   <title>Urian Viera :: WebDeveloper</title>
   <link rel="icon" type="image/x-icon" href="assets/img/logo-mywebsite-urian-viera.svg">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
@@ -47,7 +53,7 @@
     <div class="row">
       <div class="col-md-12 text-center" style="padding:100px 0px;">
         <h3 class="text-center" style="font-size:40px; color:#333; font-weight:900;">
-          &#128562; COMO EVITAR INSERCIÓN DE REGISTROS DUPLICADOS CON MySQL 2022 💥 ✅
+          &#128562; CÓMO EVITAR INSERCIÓN DE REGISTROS DUPLICADOS CON MySQL 2022 💥 ✅
         </h3>
       </div>
     </div>
@@ -57,15 +63,17 @@
     <div class="container">
       <div class="row">
       <div class="col-md-12 text-center">
-        <div style="display:none;" id="msj" class="alert alert-success alert-dismissible fade show" role="alert">
+        <div style="display:none;" class="alert alert-success alert-dismissible fade show" role="alert">
           
         </div>
       </div>
 
-      <?php include('tabla.php'); ?>
+      <div id="resultadoCapa">
+        <?php include('tabla.php'); ?>
+      </div>
 
         <div class="col-md-4 text-center">
-          <form name="miForm" id="miForm" >
+          <form name="miForm" id="miForm" method="POST">
             <div class="form-group mb-2 mt-2">
               <label for="Nombre">Nombre</label>
               <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre">

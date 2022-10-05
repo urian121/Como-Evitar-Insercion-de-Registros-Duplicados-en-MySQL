@@ -1,25 +1,31 @@
+//mI preloader
 window.addEventListener("load", () => {
     setTimeout(function() {
       $('body').addClass('loaded');
-    }, 500);
+    }, 200);
+  });
 
-    const miForm = document.querySelector("#miForm");
+
+  const miForm = document.querySelector("#miForm");
     miForm.addEventListener("submit", (e) => {
       e.preventDefault();
 
       let nombre      = document.querySelector('#nombre').value;
       let apellido    = document.querySelector('#apellido').value;
       let email       = document.querySelector('input[name=email]').value;
-      let telefono    = document.querySelector('#telefono').value;
+
+      let inputTlf    = document.querySelector('#telefono');
+          telefono    = inputTlf.value;
       let sueldo      = document.querySelector('#sueldo').value;
       console.log(nombre + ' - ' + apellido + ' - ' + email + ' - ' + telefono + ' - ' + sueldo);
-
-  /**Validando los campos para evitar campos vacios */
-  if((nombre ==='')){
-    alert('campo vacio');
-  }
-
-
+ 
+    /**Validando los campos para evitar campos vacios */
+    if (nombre.length === '' || email.length <= 0 || telefono === '' || sueldo ==='') {
+      mensaje(tipoMensaje='CamposVacios');
+      (telefono =='') ? inputTlf.focus() : '';
+      return; 
+    }
+  
   btnEnviar.disabled = true; /*Desabilitando el boton Enviar*/
   btnEnviar.innerHTML = "Enviando mi Form..."; /*Cambiando el valor del boton*/
   loader(true); /*Mi funcion Pre-loader*/
@@ -39,9 +45,22 @@ window.addEventListener("load", () => {
           },
         })
         .then((res) => {
-          console.log(res);
-          /**Utilizo un Ternario, Si existe el registro, lo actualizo */
-          (res.data ==1) ? mensaje(res.data) : mensaje(res.data)
+          //console.log(res.data);
+          /*Consulto la tabla de registros con ajax para evitar recargar la pagina,
+            y muestro los resultados en el contenedor resultadoCapa
+          */
+          $.ajax({
+            url: 'tabla.php',
+            type: 'GET',
+            success: function (resultado) {
+              capaR = document.querySelector('#resultadoCapa').innerHTML=resultado;
+            }
+          });
+          
+
+          /**Utilizo un Ternario, Si existe el registro, 
+          * lo actualizo de lo contrario lo inserto en la tabla */
+          (res.data =='exitoInsert') ? mensaje('exitoInsert') : mensaje('exitoUpdate')
 
           loader(false);
           btnEnviar.disabled = false; /*Desabilitando el boton */
@@ -56,7 +75,7 @@ window.addEventListener("load", () => {
           miForm.reset(); //Limpiando formulario
         });
     });
-  });
+
 
 
 
@@ -79,21 +98,28 @@ function loader(cargando) {
 
 
 /**Funcion para mostrar mensaje de acuerdo a la respuesta */
-function mensaje(type){
-    console.log(type);
-    let divMensaje = document.querySelector('#msj'); /**Accedo a la capa del mensaje */
-    divMensaje.style.display='block'; /**Pongo la capo msj visible */
+function mensaje(tipoMensaje){
+  let alerta = document.querySelector('.alert'); /**Accedo al div con la clase alerta */
+  alerta.style.display='block'; /**Pongo visible el div */
+  //console.log(tipoMensaje);
 
-    if(type ==1){ /** Actualizo registro por que ya existe en BD*/
-        //divMensaje.innerHTML =`<strong>Uhs!</strong> El empleado ya existe ⚠️ 😲 ..!`;
-        divMensaje.innerHTML =`<strong>Felicitaciones!</strong> El empleado fue actualizado con éxito .! 👍`;
+    if(tipoMensaje =='exitoUpdate'){ /** Actualizo registro por que ya existe en BD*/
+      alerta.classList.replace("alert-danger", "alert-success");   
+    //alerta.innerHTML =`<strong>Uhs!</strong> El empleado ya existe ⚠️ 😲 ..!`;
+
+        alerta.innerHTML =`<strong>Felicitaciones!</strong> El empleado fue actualizado con éxito .! 👍`;
+    }else if(tipoMensaje =='exitoInsert'){
+        alerta.classList.replace("alert-danger", "alert-success"); 
+        /** Se inserta el registro por que no existe en BD*/
+        alerta.innerHTML =`<strong>Felicitaciones!</strong> El cliente fue registrado con éxito .! 👍`;
     }else{ /** Se inserta el registro por que no existe en BD*/
-        divMensaje.innerHTML =`<strong>Felicitaciones!</strong> El cliente fue registrado con éxito .! 👍`;
+    alerta.classList.replace("alert-success", "alert-danger"); 
+    alerta.innerHTML =`<strong>Uhs!</strong> Todos los campos son obligatorios ⚠️ 😭`;
     }
 
     /**Ocultar mensaje luego de 3 segundos */
     setTimeout(() => {
-        divMensaje.style.display='none';
+      alerta.style.display='none';
       }, "3000")
       
 }

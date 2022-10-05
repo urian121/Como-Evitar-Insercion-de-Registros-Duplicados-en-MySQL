@@ -1,6 +1,6 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-sleep(3);
+sleep(2);
 
     include('config.php');
     $nombre       = trim($_POST['nombre']);
@@ -12,8 +12,8 @@ sleep(3);
     date_default_timezone_set("America/Bogota");
     $fecha_ingreso  = date("Y-m-d");
 
-    /**Importante: Antes de hacer cualquier accion verifico si existe algun registro con
-     * informacion  igaul a la que esta llegando desde el formulario.
+    /**Importante: Antes de hacer cualquier acción verifico si existe algún registro con
+     * información  igual a la que esta llegando desde el formulario.
     */
     $selectQuery   = ("SELECT email FROM trabajadores WHERE email='{$email}' ");
     $query         = mysqli_query($con, $selectQuery);
@@ -30,13 +30,13 @@ sleep(3);
                 fecha_ingreso=CURDATE()
                 ");
         $resultadoCliente = mysqli_query($con, $updateCliente);    
-        echo '1';
+        echo 'exitoUpdate';
     } else {
         /**Caso 2: No existe, creo el registro */
         $InsertCliente = "INSERT INTO trabajadores(nombre, apellido, email, telefono, sueldo, fecha_ingreso) 
             VALUES ('$nombre','$apellido','$email','$telefono', '$sueldo', CURDATE())";
         $resultadoCliente = mysqli_query($con, $InsertCliente); 
-        echo '2';
+        echo 'exitoInsert';
     }
 
 }
