@@ -53,7 +53,7 @@ window.addEventListener("load", () => {
             url: 'tabla.php',
             type: 'GET',
             success: function (resultado) {
-              capaR = document.querySelector('#resultadoCapa').innerHTML=resultado;
+              capaR = document.querySelector('.resultadoCapa').innerHTML=resultado;
             }
           });
           
@@ -104,17 +104,18 @@ function mensaje(tipoMensaje){
   //console.log(tipoMensaje);
 
     if(tipoMensaje =='exitoUpdate'){ /** Actualizo registro por que ya existe en BD*/
-      alerta.classList.replace("alert-danger", "alert-success");   
-    //alerta.innerHTML =`<strong>Uhs!</strong> El empleado ya existe ⚠️ 😲 ..!`;
-
-        alerta.innerHTML =`<strong>Felicitaciones!</strong> El empleado fue actualizado con éxito .! 👍`;
+      alerta.classList.remove('alert-warning','alert-success'); //Elimino estas clases
+      alerta.classList.add('alert-danger');  //Agrego esta clase
+      alerta.innerHTML =`<strong>Felicitaciones!</strong> El empleado fue actualizado con éxito .! 👍`;
     }else if(tipoMensaje =='exitoInsert'){
-        alerta.classList.replace("alert-danger", "alert-success"); 
-        /** Se inserta el registro por que no existe en BD*/
-        alerta.innerHTML =`<strong>Felicitaciones!</strong> El cliente fue registrado con éxito .! 👍`;
+      alerta.classList.remove('alert-warning','alert-danger'); //Elimino estas clases
+      alerta.classList.add('alert-success');  //Agrego esta clase
+      /** Se inserta el registro por que no existe en BD*/
+      alerta.innerHTML =`<strong>Felicitaciones!</strong> El cliente fue registrado con éxito .! 👍`;
     }else{ /** Se inserta el registro por que no existe en BD*/
-    alerta.classList.replace("alert-success", "alert-danger"); 
-    alerta.innerHTML =`<strong>Uhs!</strong> Todos los campos son obligatorios ⚠️ 😭`;
+      alerta.classList.remove('alert-warning','alert-success'); //Elimino estas clases
+      alerta.classList.add("alert-danger"); 
+      alerta.innerHTML =`<strong>Uhs!</strong> Todos los campos son obligatorios ⚠️ 😭`;
     }
 
     /**Ocultar mensaje luego de 3 segundos */

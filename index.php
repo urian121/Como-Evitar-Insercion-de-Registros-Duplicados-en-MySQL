@@ -68,7 +68,7 @@
         </div>
       </div>
 
-      <div id="resultadoCapa">
+      <div class="col-md-8 text-center resultadoCapa">
         <?php include('tabla.php'); ?>
       </div>
 
