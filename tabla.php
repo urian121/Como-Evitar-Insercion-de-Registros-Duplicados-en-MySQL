@@ -25,7 +25,7 @@ $total      = mysqli_num_rows($query);
                     <td><?php echo $dataRow['nombre'] . ' ' . $dataRow['apellido']; ?></td>
                     <td><?php echo $dataRow['email']; ?></td>
                     <td><?php echo $dataRow['telefono']; ?></td>
-                    <td><?php echo '$ ' . $dataRow['sueldo']; ?></td>
+                    <td><?php echo '$ ' . number_format($dataRow['sueldo'], 0,'','.'); ?></td>
                 </tr>
             </tbody>
         <?php } ?>
